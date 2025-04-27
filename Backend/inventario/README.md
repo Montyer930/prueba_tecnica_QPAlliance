@@ -68,7 +68,7 @@ Credenciales:
 |--------|-------------------------|-----------------------------------------------------|
 | GET    | /products               | Obtiene la lista de todos los productos             |
 | POST   | /products               | Crea un nuevo producto                              |
-| GET    | /products/bajo-stock    | Obtiene la lista de productos con stock bajo        |
+| GET    | /products/alerts        | Obtiene la lista de productos con stock bajo        |
 
 Ejemplo de uso de los endpoints:
 
