@@ -33,7 +33,7 @@ Este frontend permite:
 1. Clonar o descargar este repositorio:
 
 ```bash
-git clone https://github.com/tuusuario/prueba-tecnica-qpalliance-frontend.git
+git clone https://github.com/Montyer930/prueba_tecnica_QPAlliance/tree/main/Frontend
 ```
 2. Navegar al directorio del proyecto:
 
