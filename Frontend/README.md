@@ -35,7 +35,7 @@ Este frontend permite:
 ```bash
 git clone https://github.com/Montyer930/prueba_tecnica_QPAlliance/tree/main/Frontend
 ```
-2. Navegar al directorio del proyecto:
+2. Abrir el archivo index.html en un navegador.
 
 Recomendado: Usar extensión Live Server en VS Code para mejor experiencia:
 
