@@ -129,3 +129,23 @@ curl -X GET http://localhost:8080/products/alerts
     "stockMinimo": 20
   }
 ]
+```
+## 🧾 Documentación interactiva - Swagger UI
+
+Esta API cuenta con documentación interactiva generada automáticamente mediante **Swagger (OpenAPI)**.
+
+### Acceso a Swagger UI
+
+Una vez la aplicación esté corriendo, puedes acceder a la documentación en:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+Desde esta interfaz puedes:
+
+- Consultar la documentación de cada endpoint.
+- Probar los endpoints directamente desde el navegador.
+- Visualizar los parámetros esperados en cada petición.
+
+
