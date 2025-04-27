@@ -41,10 +41,16 @@ public class ProductController {
         return ResponseEntity.ok(productService.obtenerAlertasStock());
     }
     
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> actualizarProducto(@PathVariable Long id, @RequestBody Product productoActualizado) {
+    Product producto = productService.actualizarProducto(id, productoActualizado);
+    return ResponseEntity.ok(producto);
+    }
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
     productService.eliminarProducto(id);
     return ResponseEntity.noContent().build(); // 204 No Content
-}
+    }
 
 }

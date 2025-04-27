@@ -38,4 +38,16 @@ public class ProductService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado");
         }
     }
+    public Product actualizarProducto(Long id, Product productoActualizado) {
+        return productoRepository.findById(id)
+            .map(producto -> {
+                producto.setCodigo(productoActualizado.getCodigo());
+                producto.setNombre(productoActualizado.getNombre());
+                producto.setStockActual(productoActualizado.getStockActual());
+                producto.setStockMinimo(productoActualizado.getStockMinimo());
+                return productoRepository.save(producto);
+            })
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
+    }
+    
 }
