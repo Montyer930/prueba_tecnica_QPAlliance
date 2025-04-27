@@ -67,8 +67,12 @@ Credenciales:
 | Método | Endpoint                | Descripción                                         |
 |--------|-------------------------|-----------------------------------------------------|
 | GET    | /products               | Obtiene la lista de todos los productos             |
-| POST   | /products               | Crea un nuevo producto                              |
+| GET    | /products/{id}          | Obtiene un producto por su ID                       |
 | GET    | /products/alerts        | Obtiene la lista de productos con stock bajo        |
+| POST   | /products               | Crea un nuevo producto                              |
+| PUT    | /products/{id}          | Actualiza un producto por su ID                     |
+| DELETE | /products/{id}          | Elimina un producto por su ID                       |
+
 
 Ejemplo de uso de los endpoints:
 
@@ -130,6 +134,20 @@ curl -X GET http://localhost:8080/products/alerts
   }
 ]
 ```
+
+### Ejemplo de `PUT /products/{id}`
+
+**Request:**
+
+```json
+{
+  "codigo": "P001",
+  "nombre": "Producto Actualizado",
+  "stockActual": 15,
+  "stockMinimo": 5
+}
+```
+
 ## 🧾 Documentación interactiva - Swagger UI
 
 Esta API cuenta con documentación interactiva generada automáticamente mediante **Swagger (OpenAPI)**.
@@ -147,5 +165,17 @@ Desde esta interfaz puedes:
 - Consultar la documentación de cada endpoint.
 - Probar los endpoints directamente desde el navegador.
 - Visualizar los parámetros esperados en cada petición.
+
+## 🖥️ Funcionalidades del Frontend
+
+- Formulario para crear nuevos productos.
+- Visualización de productos en una tabla responsiva con Bootstrap 5.
+- Productos con stock bajo resaltados en color rojo.
+- **Editar productos existentes**:
+  - Carga los datos al formulario.
+  - Permite actualizar y guardar los cambios.
+- **Eliminar productos** con confirmación mediante SweetAlert2.
+- Notificaciones de éxito y error visualmente atractivas.
+- Loader/spinner visible durante cargas de datos.
 
 

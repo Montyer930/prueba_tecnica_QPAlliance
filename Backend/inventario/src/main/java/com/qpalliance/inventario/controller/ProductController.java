@@ -23,6 +23,17 @@ public class ProductController {
         return ResponseEntity.ok(productService.obtenerTodos());
     }
 
+    @GetMapping("/alerts")
+    public ResponseEntity<List<Product>> obtenerAlertasStock() {
+        return ResponseEntity.ok(productService.obtenerAlertasStock());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> obtenerProductoPorId(@PathVariable Long id) {
+        Product producto = productService.obtenerProductoPorId(id);
+        return ResponseEntity.ok(producto);
+    }
+
     @PostMapping
     public ResponseEntity<Product> crearProducto(@Valid @RequestBody ProductRequest productRequest) {
         Product nuevoProducto = new Product(
@@ -36,15 +47,19 @@ public class ProductController {
         return ResponseEntity.status(201).body(creado);
     }
 
-    @GetMapping("/alerts")
-    public ResponseEntity<List<Product>> obtenerAlertasStock() {
-        return ResponseEntity.ok(productService.obtenerAlertasStock());
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> actualizarProducto(@PathVariable Long id, @RequestBody Product productoActualizado) {
+        Product producto = productService.actualizarProducto(id, productoActualizado);
+        return ResponseEntity.ok(producto);
     }
+    
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
-    productService.eliminarProducto(id);
-    return ResponseEntity.noContent().build(); // 204 No Content
-}
+        productService.eliminarProducto(id);
+        return ResponseEntity.noContent().build(); // 204 No Content
+    }    
 
 }
