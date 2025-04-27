@@ -49,5 +49,9 @@ public class ProductService {
             })
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
     }
+    public Product obtenerProductoPorId(Long id) {
+        return productoRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado"));
+    }
     
 }

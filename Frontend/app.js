@@ -1,8 +1,12 @@
 const form = document.getElementById('productForm');
 const productList = document.getElementById('productList');
 const loader = document.getElementById('loader');
+const submitButton = document.getElementById('submitButton');
 
 const apiUrl = 'http://localhost:8080/products';
+
+let editMode = false;
+let editingProductId = null;
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -15,22 +19,32 @@ form.addEventListener('submit', async (e) => {
   };
 
   try {
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
+    let response;
+    if (editMode) {
+      response = await fetch(`${apiUrl}/${editingProductId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    } else {
+      response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    }
 
     if (response.ok) {
       const result = await response.json();
-      Swal.fire('Éxito', `Producto ${result.nombre} creado correctamente`, 'success');
+      Swal.fire('Éxito', `Producto ${editMode ? 'actualizado' : 'creado'} correctamente`, 'success');
       form.reset();
+      editMode = false;
+      editingProductId = null;
+      submitButton.innerText = 'Crear Producto';
       fetchProducts();
     } else {
       const errorData = await response.json();
-      Swal.fire('Error', errorData.message || 'Error al crear el producto', 'error');
+      Swal.fire('Error', errorData.message || `Error al ${editMode ? 'actualizar' : 'crear'} el producto`, 'error');
     }
   } catch (error) {
     Swal.fire('Error', 'No se pudo conectar al servidor', 'error');
@@ -55,6 +69,7 @@ async function fetchProducts() {
         <td>${product.stockActual}</td>
         <td>${product.stockMinimo}</td>
         <td>
+          <button class="btn btn-warning btn-sm me-1" onclick="loadProductToForm(${product.id})">Editar</button>
           <button class="btn btn-danger btn-sm" onclick="confirmDelete(${product.id})">Eliminar</button>
         </td>
       `;
@@ -64,6 +79,27 @@ async function fetchProducts() {
     console.error('Error al obtener productos:', error);
   } finally {
     hideLoader();
+  }
+}
+
+async function loadProductToForm(id) {
+  try {
+    const response = await fetch(`${apiUrl}/${id}`);
+    if (response.ok) {
+      const product = await response.json();
+      document.getElementById('codigo').value = product.codigo;
+      document.getElementById('nombre').value = product.nombre;
+      document.getElementById('stockActual').value = product.stockActual;
+      document.getElementById('stockMinimo').value = product.stockMinimo;
+
+      editMode = true;
+      editingProductId = id;
+      submitButton.innerText = 'Actualizar Producto';
+    } else {
+      Swal.fire('Error', 'Producto no encontrado', 'error');
+    }
+  } catch (error) {
+    Swal.fire('Error', 'No se pudo conectar al servidor', 'error');
   }
 }
 
