@@ -40,4 +40,11 @@ public class ProductController {
     public ResponseEntity<List<Product>> obtenerAlertasStock() {
         return ResponseEntity.ok(productService.obtenerAlertasStock());
     }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
+    productService.eliminarProducto(id);
+    return ResponseEntity.noContent().build(); // 204 No Content
+}
+
 }
