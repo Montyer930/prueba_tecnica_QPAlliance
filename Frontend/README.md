@@ -48,3 +48,32 @@ La aplicación estará disponible en:
 ```
 http://localhost:5500
 ```
+
+## ⚙️ Configuración del backend
+Importante: Para que el frontend funcione correctamente, asegúrate que el backend esté ejecutándose en:
+```
+http://localhost:8080
+```
+y que los endpoints de la API estén accesibles, incluyendo:
+
+GET /products
+
+POST /products
+
+PUT /products/{id}
+
+DELETE /products/{id}
+
+## 🎨 Características principales
+Formulario para crear o actualizar productos.
+
+Edición automática al seleccionar un producto.
+
+Confirmación antes de eliminar productos.
+
+Alertas visuales para errores o confirmaciones.
+
+Resaltado automático de productos en alerta de stock (fondo rojo).
+
+Loader de carga mientras se consulta el inventario.
+
