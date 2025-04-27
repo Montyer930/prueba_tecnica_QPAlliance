@@ -12,7 +12,7 @@ form.addEventListener('submit', async (e) => {
         stockActual: parseInt(document.getElementById('stockActual').value),
         stockMinimo: parseInt(document.getElementById('stockMinimo').value)
     };
-
+    
     try {
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -36,23 +36,46 @@ form.addEventListener('submit', async (e) => {
         Swal.fire('Error', 'No se pudo conectar al servidor', 'error');
     }
 });
+function showLoader() {
+    document.getElementById('loader').style.display = 'block';
+}
+
+function hideLoader() {
+    document.getElementById('loader').style.display = 'none';
+}
 
 async function fetchProducts() {
     try {
+        showLoader();
         const response = await fetch(apiUrl);
         const products = await response.json();
+        hideLoader();
         
         productList.innerHTML = '';
         products.forEach(product => {
-            const li = document.createElement('li');
-            li.className = 'list-group-item';
-            li.textContent = `${product.codigo} - ${product.nombre} (Stock: ${product.stockActual}, Mínimo: ${product.stockMinimo})`;
+            const row = document.createElement('tr');
+
+        // Compara stock
+        const alertClass = product.stockActual < product.stockMinimo ? 'table-danger' : '';
+
+        row.className = alertClass;
+        row.innerHTML = `
+            <td>${product.codigo}</td>
+            <td>${product.nombre}</td>
+            <td>${product.stockActual}</td>
+            <td>${product.stockMinimo}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" onclick="eliminarProducto('${product.id}')">Eliminar</button>
+            </td>
+        `;
             productList.appendChild(li);
         });
     } catch (error) {
+        hideLoader();
         console.error('Error al obtener productos:', error);
     }
 }
+
 
 // Cargar productos al iniciar
 fetchProducts();
